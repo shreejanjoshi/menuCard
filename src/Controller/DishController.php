@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Dish;
+use App\Repository\DishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Resquest;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,13 @@ class DishController extends AbstractController
 {
     // /dish/dish
     #[Route('/', name: 'edit')]
-    public function index(): Response
+    //in repo findoneby get individuel data but want to store entire data store in array
+    public function index(DishRepository $dr): Response
     {
+        $dishes = $dr->findAll();
+
         return $this->render('dish/index.html.twig', [
-            'controller_name' => 'DishController',
+            'dishes' => $dishes
         ]);
     }
 
