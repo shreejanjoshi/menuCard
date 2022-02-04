@@ -17,7 +17,7 @@ class Dish
     private ?string $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $Description;
+    private ?string $description;
 
     #[ORM\Column(type: 'float', nullable: true)]
     private ?float $price;
@@ -47,12 +47,12 @@ class Dish
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(?string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }

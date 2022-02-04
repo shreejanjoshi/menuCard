@@ -46,27 +46,27 @@ class Category
     /**
      * @return Collection|Dish[]
      */
-    public function getCategory(): Collection
+    public function getDish(): Collection
     {
-        return $this->category;
+        return $this->dish;
     }
 
-    public function addCategory(Dish $category): self
+    public function addCDish(Dish $dish): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
-            $category->setCategory($this);
+        if (!$this->dish->contains($dish)) {
+            $this->dish[] = $dish;
+            $dish->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeCategory(Dish $category): self
+    public function removeDish(Dish $dish): self
     {
-        if ($this->category->removeElement($category)) {
+        if ($this->dish->removeElement($dish)) {
             // set the owning side to null (unless already changed)
-            if ($category->getCategory() === $this) {
-                $category->setCategory(null);
+            if ($dish->getCategory() === $this) {
+                $dish->setCategory(null);
             }
         }
 
