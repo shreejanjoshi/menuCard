@@ -42,6 +42,7 @@ class DishController extends AbstractController
             //entity manager
             $em = $doctrine->getManager();
             $em->persist($dish);
+            //to change in database
             $em->flush();
 
             return $this->redirect($this->generateUrl('dish.edit'));
@@ -51,5 +52,17 @@ class DishController extends AbstractController
         return $this->render('dish/create.html.twig', [
             'createForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/delete/{id}', name: 'delete')]
+    public function delete($id, DishRepository $dr, ManagerRegistry $doctrine){
+        //entity manager
+        $em = $doctrine->getManager();
+        $dish = $dr->find($id);
+        $em->remove($dish);
+        //to change in database
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('dish.edit'));
     }
 }
