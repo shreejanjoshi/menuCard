@@ -90,6 +90,8 @@ class DishController extends AbstractController
     #[Route('/show/{id}', name: 'show')]
     //we can do it like up or with param converter Dish $dish and also need package annotation
     public function show(Dish $dish){
-    dump($dish);
+        return $this->render('dish/show.html.twig', [
+            'dish' => $dish
+        ]);
     }
 }
