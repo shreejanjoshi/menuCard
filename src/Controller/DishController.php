@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Dish;
+use App\Form\DishType;
 use App\Repository\DishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Resquest;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,7 +17,7 @@ class DishController extends AbstractController
 {
     // /dish/dish
     #[Route('/', name: 'edit')]
-    //in repo findoneby get individuel data but want to store entire data store in array
+    //in repo find-one-by get individuel data but want to store entire data store in array
     public function index(DishRepository $dr): Response
     {
         $dishes = $dr->findAll();
@@ -27,17 +28,28 @@ class DishController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
-    public function create(ManagerRegistry $doctrine): Response
+    public function create(ManagerRegistry $doctrine, Request $request): Response
     {
         $dish = new Dish();
-        $dish->setName('Pizza');
 
-        //entity manager
-        $em = $doctrine->getManager();
-        $em->persist($dish);
-        $em->flush();
+        //form
+        $form = $this->createForm(DishType::class, $dish);
+        //to send data to database
+        $form->handleRequest($request);
+
+        //if submit
+        if($form->isSubmitted()){
+            //entity manager
+            $em = $doctrine->getManager();
+            $em->persist($dish);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('dish.edit'));
+        }
 
         //response
-        return new Response("Dish has been created");
+        return $this->render('dish/create.html.twig', [
+            'createForm' => $form->createView(),
+        ]);
     }
 }
