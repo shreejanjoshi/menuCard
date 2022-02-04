@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <!-- name must be same success -->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            <h3>{{ message }}</h3>
+        </div>
+    {% endfor %}
     <br>
     <div class="container">
     <h2>Edit dishes</h2>

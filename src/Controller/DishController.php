@@ -63,6 +63,9 @@ class DishController extends AbstractController
         //to change in database
         $em->flush();
 
+        //flash message
+        $this->addFlash('success','Dish was removed successfully');
+
         return $this->redirect($this->generateUrl('dish.edit'));
     }
 }
