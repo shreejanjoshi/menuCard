@@ -18,16 +18,13 @@ class Category
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $name;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Dish::class)]
-    private ArrayCollection $dish;
+    #[ORM\OneToMany(targetEntity:"App\Entity\Dish", mappedBy:"Category")]
+    private $category;
 
     public function __construct()
     {
-        $this->dish = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
-
-    //#[ORM\OneToMany(targetEntity:"App\Entity\Dish", mappedBy:"category")]
-    //private $dish;
 
     public function getId(): ?int
     {
@@ -49,37 +46,36 @@ class Category
     /**
      * @return Collection|Dish[]
      */
-    public function getDish(): Collection
+    public function getCategory(): Collection
     {
-        return $this->dish;
+        return $this->category;
     }
 
-    public function addDish(Dish $dish): self
+    public function addCategory(Dish $category): self
     {
-        if (!$this->dish->contains($dish)) {
-            $this->dish[] = $dish;
-            $dish->setCategory($this);
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+            $category->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeDish(Dish $dish): self
+    public function removeCategory(Dish $category): self
     {
-        if ($this->dish->removeElement($dish)) {
+        if ($this->category->removeElement($category)) {
             // set the owning side to null (unless already changed)
-            if ($dish->getCategory() === $this) {
-                $dish->setCategory(null);
+            if ($category->getCategory() === $this) {
+                $category->setCategory(null);
             }
         }
 
         return $this;
     }
 
-    //display list of object in string and to us as a text on website
-    public function __toString()
+    public function __toString(): string
     {
-        //need to use the category object in a drop down menu as text
+        //dropdrown menu
         return $this->name;
     }
 }
