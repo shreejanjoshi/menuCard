@@ -43,12 +43,21 @@ class DishController extends AbstractController
             $em = $doctrine->getManager();
 
             //store image -- files where all files is store
-            $image = $request->files->get('image')['attachment'];
+            $image = $request->files->get('dish')['attachment'];
 
             if($image){
                 //file name can be same so better  take file and attach dynamic componet ___ guessClintExtentension which is pendant to the entire file name
-                $filename = md5(uniqid('', true). '.' .$image->guessClintExtentension);
+                $filename = md5(uniqid('', true)). '.'. $image->guessClientExtension();
             }
+
+            $image->move(
+                //config servise.yaml paramerts
+                $this->getParameter('images_folder'),
+                $filename
+            );
+
+            //update image in database with pass to the filename
+            $dish->setImage($filename);
 
             $em->persist($dish);
             //to change in database
