@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Dish;
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,6 +21,10 @@ class DishType extends AbstractType
             ->add('attachment', FileType::class, ['mapped' => false])
             //->add('image', FileType::class)
             ->add('Description')
+            //dropdown category entity
+            ->add('category', EntityType::class, [
+                'class' => Category::class
+            ])
             ->add('price')
             ->add('save', SubmitType::class)
         ;
