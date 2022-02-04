@@ -14,16 +14,16 @@ class Dish
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $Description;
+    private ?string $Description;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    private $price;
+    private ?float $price;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $image;
+    private ?string $image;
 
     public function getId(): ?int
     {
