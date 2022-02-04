@@ -86,4 +86,10 @@ class DishController extends AbstractController
 
         return $this->redirect($this->generateUrl('dish.edit'));
     }
+
+    #[Route('/show/{id}', name: 'show')]
+    //we can do it like up or with param converter Dish $dish and also need package annotation
+    public function show(Dish $dish){
+    dump($dish);
+    }
 }
