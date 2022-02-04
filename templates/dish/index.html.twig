@@ -20,7 +20,7 @@
                 <td>Category</td>
                 <td>Price</td>
                 <td>Delete</td>
-                <td><a href="{{ path('dish.create') }}">Create</a></td>
+                <td><a href="{{ path('dish.create') }}"><button type="button" class="btn btn-primary">Create</button></a></td>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +31,7 @@
                     <td>{{ dish.description }}</td>
                     <td>{{ dish.category }}</td>
                     <td>{{ dish.price }}</td>
-                    <td><a href="{{ path('dish.delete', {id: dish.id}) }}">Delete</a></td>
+                    <td><a href="{{ path('dish.delete', {id: dish.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
                     <td></td>
                 </tr>
             {% endfor %}
