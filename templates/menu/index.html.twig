@@ -18,12 +18,15 @@
             </div>
             <div class="clearfix"></div>
             <div class="row playlist-area">
-                <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                    <div class="playlist-item">
-                        <img src="" alt="">
-                        <h5></h5>
+                {% for dish in dishes %}
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 {{ dish.category }}">
+                        <div class="playlist-item">
+                            <img src="{{ asset('images/' ~ dish.image) }}" class="img-responsive" alt="">
+                            <h5>{{ dish.description }} - EUR {{ dish.price }}</h5>
+                            <p>Order No.{{ dish.id }}</p>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
