@@ -5,37 +5,46 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/reg', name: 'reg')]
-    public function reg(ManagerRegistry $doctrine, Request $request): Response
+    public function reg(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
 
         //form
-        $form = $this->createForm(RegistrationType::class, $user);
+        $regform = $this->createForm(RegistrationType::class, $user);
         //to send data to database
-        $form->handleRequest($request);
+        $regform->handleRequest($request);
 
         //if submit
-        if($form->isSubmitted()){
+        if($regform->isSubmitted()){
+            //password hasher
+            $input = $regform->get('password')->getData();
+            $user->setPassword(
+                $passwordHasher->hashPassword($user, $input)
+            );
+
             //entity manager
             $em = $doctrine->getManager();
 
-            $em->persist();
+            $em->persist($user);
             //to change in database
             $em->flush();
 
-            return $this->redirect($this->generateUrl('dish.edit'));
+            return $this->redirect($this->generateUrl('home'));
         }
 
         return $this->render('registration/index.html.twig', [
-            'regform' => $form->createView()
+            'regform' => $regform->createView()
         ]);
     }
 }
