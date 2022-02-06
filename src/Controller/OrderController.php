@@ -27,7 +27,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/orders/{id}', name: 'orders')]
-    public function order(ManagerRegistry $doctrine, Request $request, Dish $dish){
+    public function order(ManagerRegistry $doctrine, Dish $dish){
         $order = new Order();
         $order->setSit('sit1');
         $order->setName($dish->getName());
@@ -42,5 +42,17 @@ class OrderController extends AbstractController
 
         $this->addFlash('order', $order->getName(). ' is added to order.');
         return $this->redirect($this->generateUrl('menu'));
+    }
+
+    #[Route("/status/{id},{status}", name: "status")]
+    public function status(ManagerRegistry $doctrine, $id, $status){
+        $em= $doctrine->getManager();
+        $order = $em->getRepository(Order::class)->find($id);
+
+        //change the value
+        $order->setStatus($status);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('order'));
     }
 }
