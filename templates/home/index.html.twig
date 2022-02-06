@@ -15,7 +15,7 @@
                             <p>Try this, {{ dish1.description }} which will cost only {{ dish1.price }}!
                                 <br>Order now to find out.</p>
                             <a href="{{ path('menu') }}" class="site-btn">Menu Card</a>
-                            <a href="#" class="site-btn sb-c2">Order</a>
+                            <a href="{{ path('orders', {id: dish1.id}) }}" class="site-btn sb-c2">Order</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -35,7 +35,7 @@
                             <p>Try this, {{ dish2.description }} which will cost only {{ dish2.price }}!
                                 <br>Order now to find out.</p>
                             <a href="{{ path('menu') }}" class="site-btn">Menu Card</a>
-                            <a href="#" class="site-btn sb-c2">Order</a>
+                            <a href="{{ path('orders', {id: dish2.id}) }}" class="site-btn sb-c2">Order</a>
                         </div>
                     </div>
                     <div class="col-lg-6">

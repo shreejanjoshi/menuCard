@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Dish;
 use App\Entity\Order;
+use App\Repository\OrderRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     #[Route('/order', name: 'order')]
-    public function index(): Response
+    public function index(OrderRepository $or): Response
     {
+        //find only order that matches certin criteria
+        $order = $or->findBy([
+            'sit' => 'sit1'
+        ]);
+
         return $this->render('order/index.html.twig', [
-            'controller_name' => 'OrderController',
+            'ordering' => $order
         ]);
     }
 

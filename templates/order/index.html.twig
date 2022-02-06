@@ -1,5 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% set sum = 0 %}
+    <br>
+    <div class="container">
+        <h2>Your Orders</h2>
+    </div>
+    <br>
 
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Order No.</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in ordering %}
+                {% set sum = sum + order.price %}
+                <tr>
+                    <td>{{ order.ordernumber }}</td>
+                    <td>{{ order.name }}</td>
+                    <td>{{ order.price }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+            {% endfor %}
+        <td></td><td></td>
+        <td>{{ sum }} EUR</td>
+        <td></td>
+        </tbody>
+    </table>
+    </div>
 {% endblock %}
