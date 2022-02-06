@@ -55,4 +55,16 @@ class OrderController extends AbstractController
 
         return $this->redirect($this->generateUrl('order'));
     }
+
+    #[Route('/remove/{id}', name: 'remove')]
+    public function delete($id, OrderRepository $or, ManagerRegistry $doctrine){
+        //entity manager
+        $em = $doctrine->getManager();
+        $order = $or->find($id);
+        $em->remove($order);
+        //to change in database
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('order'));
+    }
 }

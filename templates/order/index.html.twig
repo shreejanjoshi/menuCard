@@ -13,7 +13,10 @@
                 <td>Order No.</td>
                 <td>Name</td>
                 <td>Price</td>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <td>Status</td>
+                {% endif %}
+                <td></td>
             </tr>
         </thead>
 
@@ -24,7 +27,10 @@
                     <td>{{ order.ordernumber }}</td>
                     <td>{{ order.name }}</td>
                     <td>{{ order.price }}</td>
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <td>{{ order.status }}</td>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <td>
                         <div class="dropdown show">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,16 +39,23 @@
 
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="{{ path('status', {id: order.id, status: 'open'}) }}">Open</a>
+                                <a class="dropdown-item" href="{{ path('status', {id: order.id, status: 'cooking'}) }}">Cooking</a>
                                 <a class="dropdown-item" href="{{ path('status', {id: order.id, status: 'ready'}) }}">Ready</a>
-                                <a class="dropdown-item" href="{{ path('status', {id: order.id, status: 'archive'}) }}">Archive</a>
                             </div>
                         </div>
+                    </td>
+                    {% endif %}
+
+                    <td>
+                        {% if order.status == 'open' %}
+                            <a href="{{ path('remove', {id: order.id}) }}" class="btn btn-outline-danger btn-sm" role="button">Remove</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
         <td></td><td></td>
         <td>{{ sum }} EUR</td>
-        <td></td>
+            <td></td><td></td>
         </tbody>
     </table>
     </div>
