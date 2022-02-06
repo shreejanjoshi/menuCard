@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Dish;
 use App\Entity\Order;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +34,7 @@ class OrderController extends AbstractController
         $em->persist($order);
         $em->flush();
 
-        $this->addFlash('order', $order->getName(). 'is added to order.');
+        $this->addFlash('order', $order->getName(). ' is added to order.');
         return $this->redirect($this->generateUrl('menu'));
     }
 }
