@@ -26,6 +26,9 @@ class Order
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $status;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $name;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Order
     public function setStatus(?string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
