@@ -46,7 +46,7 @@
 				<a href="{{path('app_login')}}" class="login">Login</a>
 				{% endif %}
 				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				<a href="" class="{{path('app_logout')}}">Logout</a>
+				<a href="{{path('app_logout')}}" class="">Logout</a>
 				{% endif %}
 			</div> 
 		</div>
