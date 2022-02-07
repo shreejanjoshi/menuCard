@@ -1,3 +1,13 @@
+<!-- install composer req twig/extra-bundle twig/cssinliner-extra -->
+
+<style>
+    h3{
+        color: #12b33d;
+    }
+</style>
+
+<!-- apply inline_css(source('@css/email.css'))  -->
+    {% apply inline_css %}
 <h1>Hallo waiter</h1>
 
 <h3>
@@ -6,3 +16,4 @@
 <p>
     {{ text }}
 </p>
+{% endapply %}
