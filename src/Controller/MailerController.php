@@ -13,11 +13,20 @@ class MailerController extends AbstractController
     #[Route('/mail', name: 'mail')]
     public function sendEmail(MailerInterface $mailer): Response
     {
-        $email = (new Email())
+        $sit = 'sit1';
+        $text = 'Please bring more salt';
+
+        $email = (new TemplateEmail($mailer))
             ->from('sit1@menucard.wip')
             ->to('waiter@menucard.wip')
             ->subject('Order')
-            ->text('extra Fries');
+
+            ->htmlTemplate('mailer/mail.html.twig')
+
+            ->context([
+                'sit' => $sit,
+                'text' => $text
+            ]);
 
         $mailer->send($email);
 
